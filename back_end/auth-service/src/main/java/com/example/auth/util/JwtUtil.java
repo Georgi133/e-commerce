@@ -1,4 +1,4 @@
-package com.example.auth.security;
+package com.example.auth.util;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;

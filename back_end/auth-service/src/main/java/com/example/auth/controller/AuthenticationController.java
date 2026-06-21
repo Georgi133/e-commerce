@@ -10,6 +10,8 @@ import com.example.auth.dto.SignInRequestDto;
 import com.example.auth.dto.SignUpRequestDto;
 import com.example.auth.service.AuthenticationService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthenticationController {
@@ -21,15 +23,15 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> signUp(@RequestBody SignUpRequestDto signUpRequest) {
+    public ResponseEntity<String> signUp(@Valid @RequestBody SignUpRequestDto signUpRequest) {
         authenticationService.register(signUpRequest);
         return ResponseEntity.created(null).body("Success");
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> signIn(@RequestBody SignInRequestDto signInRequest) {
-        authenticationService.login(signInRequest);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<String> signIn(@Valid @RequestBody SignInRequestDto signInRequest) {
+        String token = authenticationService.login(signInRequest);
+        return ResponseEntity.ok().body(token);
     }
 
 

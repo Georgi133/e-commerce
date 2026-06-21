@@ -1,16 +1,21 @@
 package com.example.auth.model;
 
+import java.util.List;
+
 import org.hibernate.annotations.UuidGenerator;
 
 import com.example.auth.dto.SignUpRequestDto;
-import com.example.auth.validation.ValidPassword;
+import com.example.auth.security.UserAuthority;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.ws.rs.DefaultValue;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,7 +24,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @Table
 @Entity(name = "users")
 @AllArgsConstructor
@@ -38,6 +43,9 @@ public class User {
     private String email;
     @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
     public static User from(SignUpRequestDto signUpRequest, String encodedPassword) {
         User user = new User();
@@ -45,7 +53,13 @@ public class User {
         user.setLastName(signUpRequest.lastName());
         user.setEmail(signUpRequest.email());
         user.setPassword(encodedPassword);
+        user.setRole(signUpRequest.role());
         return user;
+    }
+
+    public void setRole(String role) {
+        if(role == null) role = UserRole.USER.name();
+        this.role = UserRole.valueOf(role);
     }
 
 }

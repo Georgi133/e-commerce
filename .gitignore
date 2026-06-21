@@ -6,3 +6,5 @@
 
 # JAR files
 *.jar
+
+.vscode

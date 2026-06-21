@@ -1,6 +1,7 @@
 package com.example.auth.dto;
 
 import com.example.auth.validation.ValidPassword;
+import com.example.auth.validation.ValidRole;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -24,7 +25,10 @@ public record SignUpRequestDto (
     @NotBlank(message = "Email is required")
     @Size(max = 100, message = "Email must be less than 100 characters")
     @Email(message = "Email should be valid")
-    String email
+    String email,
+
+    @ValidRole
+    String role
 ) {
 
 
