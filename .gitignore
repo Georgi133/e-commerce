@@ -1,10 +1,11 @@
 # Maven
 **/target/
 
-# Java compiled files
-*.class
+# All compiled Java class files anywhere
+**/*.class
 
 # JAR files
 *.jar
 
-.vscode
+# VS Code directory
+.vscode/
